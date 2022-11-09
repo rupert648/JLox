@@ -54,7 +54,9 @@ operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "
 </table>
 
 # Refined Lox Grammar With Precedence
-expression     → equality ;
+expression     → ternary ;
+
+ternary        → equality ( "?" ternary ":" ternary)*; 
 
 equality       → comparison ( ( "!=" | "==" ) comparison )* ;
 
