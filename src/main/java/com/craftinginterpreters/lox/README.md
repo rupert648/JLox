@@ -1,4 +1,4 @@
-# Lox Grammar
+# Lox Grammar Without Precedence
 expression     → literal
 | unary
 | binary
@@ -13,3 +13,57 @@ unary          → ( "-" | "!" ) expression ;
 binary         → expression operator expression ;
 
 operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "/" ;
+
+# Precedence of Grammar
+<table>
+<thead>
+<tr>
+  <td>Name</td>
+  <td>Operators</td>
+  <td>Associates</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Equality</td>
+  <td><code>==</code> <code>!=</code></td>
+  <td>Left</td>
+</tr>
+<tr>
+  <td>Comparison</td>
+  <td><code>&gt;</code> <code>&gt;=</code>
+      <code>&lt;</code> <code>&lt;=</code></td>
+  <td>Left</td>
+</tr>
+<tr>
+  <td>Term</td>
+  <td><code>-</code> <code>+</code></td>
+  <td>Left</td>
+</tr>
+<tr>
+  <td>Factor</td>
+  <td><code>/</code> <code>*</code></td>
+  <td>Left</td>
+</tr>
+<tr>
+  <td>Unary</td>
+  <td><code>!</code> <code>-</code></td>
+  <td>Right</td>
+</tr>
+</tbody>
+</table>
+
+# Refined Lox Grammar With Precedence
+expression     → equality ;
+
+equality       → comparison ( ( "!=" | "==" ) comparison )* ;
+
+comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
+
+term           → factor ( ( "-" | "+" ) factor )* ;
+
+factor         → unary ( ( "/" | "*" ) unary )* ;
+
+unary          → ( "!" | "-" ) unary | primary ;
+
+primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
