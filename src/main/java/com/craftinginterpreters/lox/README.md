@@ -54,6 +54,14 @@ operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "
 </table>
 
 # Refined Lox Grammar With Precedence
+program        → statement* EOF ;
+
+statement      → exprStmt | printStmt ;
+
+exprStmt       → expression ";" ;
+
+printStmt      → "print" expression ";" ;
+
 expression     → ternary ;
 
 ternary        → equality ( "?" ternary ":" ternary)*; 
