@@ -54,15 +54,25 @@ operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "
 </table>
 
 # Refined Lox Grammar With Precedence
-program        → statement* EOF ;
+program        → declaration* EOF ;
 
-statement      → exprStmt | printStmt ;
+declaration    → varDecl | statement ;
+
+varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
+
+statement      → exprStmt | printStmt | block;
+
+block          -> "{" declaration* "}";
 
 exprStmt       → expression ";" ;
 
 printStmt      → "print" expression ";" ;
 
+
+
 expression     → ternary ;
+
+assignment     → IDENTIFIER "=" assignment | equality ;
 
 ternary        → equality ( "?" ternary ":" ternary)*; 
 
@@ -76,4 +86,4 @@ factor         → unary ( ( "/" | "*" ) unary )* ;
 
 unary          → ( "!" | "-" ) unary | primary ;
 
-primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" ;
+primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER ;
