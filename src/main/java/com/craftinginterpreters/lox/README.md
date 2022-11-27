@@ -60,7 +60,15 @@ declaration    → varDecl | statement ;
 
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 
-statement      → exprStmt | printStmt | block;
+statement      → exprStmt | printStmt | block |  ifStmt | whileStmt | forStmt;
+
+forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
+                expression? ";"
+                expression? ")" statement ;
+
+whileStmt      → "while" "(" expression ")" statement ;
+
+ifStmt         → "if" "(" expression ")" statement ( "else" statement )? ;
 
 block          -> "{" declaration* "}";
 
@@ -74,7 +82,11 @@ expression     → ternary ;
 
 assignment     → IDENTIFIER "=" assignment | equality ;
 
-ternary        → equality ( "?" ternary ":" ternary)*; 
+ternary        → logic_or ( "?" ternary ":" ternary)*; 
+
+logic_or       → logic_and ( "or" logic_and )* ;
+
+logic_and      → equality ( "and" equality )* ;
 
 equality       → comparison ( ( "!=" | "==" ) comparison )* ;
 
@@ -84,6 +96,6 @@ term           → factor ( ( "-" | "+" ) factor )* ;
 
 factor         → unary ( ( "/" | "*" ) unary )* ;
 
-unary          → ( "!" | "-" ) unary | primary ;
+unary          → ( "!" | "-" ) unary | primary ;30k
 
 primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER ;
