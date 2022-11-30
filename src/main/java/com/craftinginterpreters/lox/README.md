@@ -56,15 +56,23 @@ operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "
 # Refined Lox Grammar With Precedence
 program        → declaration* EOF ;
 
-declaration    → varDecl | statement ;
+declaration    → funDecl | varDecl | statement ;
+
+funDecl        → "fun" function ;
+
+function       → IDENTIFIER "(" parameters? ")" block ;
 
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 
-statement      → exprStmt | printStmt | block |  ifStmt | whileStmt | forStmt;
+statement      → exprStmt | printStmt | block |  ifStmt | whileStmt | forStmt | returnStmt;
 
 forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
                 expression? ";"
                 expression? ")" statement ;
+
+returnStmt     → "return" expression? ";" ;
+
+parameters     → IDENTIFIER ( "," IDENTIFIER )* ;
 
 whileStmt      → "while" "(" expression ")" statement ;
 
@@ -76,9 +84,11 @@ exprStmt       → expression ";" ;
 
 printStmt      → "print" expression ";" ;
 
+arguments      → expression ( "," expression )* ;
 
 
-expression     → ternary ;
+
+expression     → assignment ;
 
 assignment     → IDENTIFIER "=" assignment | equality ;
 
@@ -97,5 +107,7 @@ term           → factor ( ( "-" | "+" ) factor )* ;
 factor         → unary ( ( "/" | "*" ) unary )* ;
 
 unary          → ( "!" | "-" ) unary | primary ;30k
+
+call           → primary ( "(" arguments? ")" )* ;
 
 primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER ;
