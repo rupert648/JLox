@@ -56,7 +56,9 @@ operator       → "==" | "!=" | "<" | "<=" | ">" | ">=" | "+"  | "-"  | "*" | "
 # Refined Lox Grammar With Precedence
 program        → declaration* EOF ;
 
-declaration    → funDecl | varDecl | statement ;
+declaration    → funDecl | classDecl | varDecl | statement ;
+
+classDecl      → "class" IDENTIFIER "{" function* "}" ;
 
 funDecl        → "fun" function ;
 
@@ -90,7 +92,7 @@ arguments      → expression ( "," expression )* ;
 
 expression     → assignment ;
 
-assignment     → IDENTIFIER "=" assignment | equality ;
+assignment     → ( call "." )? IDENTIFIER "=" assignment | logic_or ;
 
 ternary        → logic_or ( "?" ternary ":" ternary)*; 
 
@@ -108,6 +110,6 @@ factor         → unary ( ( "/" | "*" ) unary )* ;
 
 unary          → ( "!" | "-" ) unary | primary ;30k
 
-call           → primary ( "(" arguments? ")" )* ;
+call           → primary ( "(" arguments? ")" | "." IDENTIFIER )* ;
 
 primary        → NUMBER | STRING | "true" | "false" | "nil" | "(" expression ")" | IDENTIFIER ;
