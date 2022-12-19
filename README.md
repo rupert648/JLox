@@ -6,4 +6,13 @@ For more information on the Lox programming language, please refer to the [Craft
 This project is a Java based implementation for an interpreter of the Lox programming language.
 Much of this work is derived from reading and workign through the [Crafting Interpreters Book](https://craftinginterpreters.com) by Robert Nystrom.
 
-I have later plans to re-implement this project in **Rust**, although I thought it would be best to get the basics down first before moving on to more complex implementations.
+### Running the Project
+The binaries for this project are already built in the `target` folder, therefore the program can be ran using the following command.
+```
+java -classpath ./target/classes com.craftinginterpreters.lox.Lox
+```
+To run the program with an input file, simply specify the input file as a command line argument.
+```
+java -classpath ./target/classes com.craftinginterpreters.lox.Lox test.lox
+```
+
